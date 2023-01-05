@@ -30,6 +30,9 @@ Product {
     type: 'lib'
 
     Depends { name: 'rp' }
+    Depends { name: 'rp2040' }
+    Depends { name: 'hardware_irq' }
+    Depends { name: 'hardware_resets' }
 
     rp.includePaths: [ 
         '.' 
@@ -40,7 +43,8 @@ Product {
         'common/**/*.h','common/**/*.c',
         'class/**/*.h','class/**/*.c',
         'device/**/*.h','device/**/*.c',
-        'osal/**/*.h','osal/**/*.c'
+        'osal/**/*.h','osal/**/*.c',
+        'portable/**/*.h','portable/**/*.c'
     ]
 
     Export {
