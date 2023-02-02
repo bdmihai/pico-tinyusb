@@ -53,7 +53,7 @@ typedef SemaphoreHandle_t osal_semaphore_t;
 
 static inline osal_semaphore_t osal_semaphore_create(osal_semaphore_def_t* semdef)
 {
-  return xSemaphoreCreateBinaryStatic(semdef);
+  return (osal_semaphore_t)xSemaphoreCreateBinaryStatic(semdef);
 }
 
 static inline bool osal_semaphore_post(osal_semaphore_t sem_hdl, bool in_isr)
@@ -67,11 +67,8 @@ static inline bool osal_semaphore_post(osal_semaphore_t sem_hdl, bool in_isr)
     BaseType_t xHigherPriorityTaskWoken;
     BaseType_t res = xSemaphoreGiveFromISR(sem_hdl, &xHigherPriorityTaskWoken);
 
-#if CFG_TUSB_MCU == OPT_MCU_ESP32S2 || CFG_TUSB_MCU == OPT_MCU_ESP32S3
-    if ( xHigherPriorityTaskWoken ) portYIELD_FROM_ISR();
-#else
-    portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
-#endif
+    if ( xHigherPriorityTaskWoken ) 
+      portYIELD_FROM_ISR();
 
     return res != 0;
   }
@@ -96,7 +93,7 @@ typedef SemaphoreHandle_t osal_mutex_t;
 
 static inline osal_mutex_t osal_mutex_create(osal_mutex_def_t* mdef)
 {
-  return xSemaphoreCreateMutexStatic(mdef);
+  return (osal_mutex_t)xSemaphoreCreateMutexStatic(mdef);
 }
 
 static inline bool osal_mutex_lock (osal_mutex_t mutex_hdl, uint32_t msec)
@@ -131,7 +128,7 @@ typedef QueueHandle_t osal_queue_t;
 
 static inline osal_queue_t osal_queue_create(osal_queue_def_t* qdef)
 {
-  return xQueueCreateStatic(qdef->depth, qdef->item_sz, (uint8_t*) qdef->buf, &qdef->sq);
+  return (osal_queue_t)xQueueCreateStatic(qdef->depth, qdef->item_sz, (uint8_t*) qdef->buf, &qdef->sq);
 }
 
 static inline bool osal_queue_receive(osal_queue_t qhdl, void* data)
@@ -150,11 +147,8 @@ static inline bool osal_queue_send(osal_queue_t qhdl, void const * data, bool in
     BaseType_t xHigherPriorityTaskWoken;
     BaseType_t res = xQueueSendToBackFromISR(qhdl, data, &xHigherPriorityTaskWoken);
 
-#if CFG_TUSB_MCU == OPT_MCU_ESP32S2 || CFG_TUSB_MCU == OPT_MCU_ESP32S3
-    if ( xHigherPriorityTaskWoken ) portYIELD_FROM_ISR();
-#else
-    portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
-#endif
+    if ( xHigherPriorityTaskWoken ) 
+      portYIELD_FROM_ISR();
 
     return res != 0;
   }

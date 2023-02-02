@@ -35,8 +35,6 @@
 // INCLUDE
 //--------------------------------------------------------------------+
 #include "common/tusb_common.h"
-#include "osal/osal.h"
-#include "common/tusb_fifo.h"
 
 //------------- HOST -------------//
 #if TUSB_OPT_HOST_ENABLED

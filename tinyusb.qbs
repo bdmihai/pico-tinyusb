@@ -33,6 +33,7 @@ Product {
     Depends { name: 'rp2040' }
     Depends { name: 'hardware_irq' }
     Depends { name: 'hardware_resets' }
+    Depends { name: 'freertos' }
 
     rp.includePaths: [ 
         '.' 
@@ -50,6 +51,7 @@ Product {
     Export {
         Depends { name: 'rp' }
         Depends { name: 'rp2040' }
+        
         rp.includePaths: exportingProduct.sourceDirectory
         rp.libraryPaths: [ exportingProduct.destinationDirectory ]
     }

@@ -29,6 +29,7 @@
 #if TUSB_OPT_DEVICE_ENABLED
 
 #include "tusb.h"
+#include "osal/osal.h"
 #include "device/usbd_pvt.h"
 #include "dcd.h"
 

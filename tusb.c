@@ -29,6 +29,7 @@
 #if TUSB_OPT_HOST_ENABLED || TUSB_OPT_DEVICE_ENABLED
 
 #include "tusb.h"
+#include "osal/osal.h"
 
 // TODO clean up
 #if TUSB_OPT_DEVICE_ENABLED
